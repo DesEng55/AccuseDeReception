@@ -236,13 +236,16 @@ def process_viso_inbox_emails(
                     # --------------------------------------------------
                     # 5. Match commande in sheet column C → write to D
                     # --------------------------------------------------
+                    # After
                     col_c_values = sheet.col_values(3)
                     updated = False
 
-                    for row_idx in range(len(col_c_values), 0, -1):
-                        cell_value = col_c_values[row_idx - 1]
+                    total_rows = len(col_c_values)
+                    start_idx = max(1, total_rows - 29)  # last 30 rows
 
-                        if commande in cell_value:
+                    for row_idx in range(total_rows, start_idx - 1, -1):
+                      cell_value = col_c_values[row_idx - 1]
+                      if commande in cell_value:
                             try:
                                 sheet.update_cell(row_idx, 4, numero)
                                 print(
